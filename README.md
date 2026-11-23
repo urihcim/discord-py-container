@@ -5,7 +5,7 @@ The image contains Python and the libraries only. Bot code is not included: moun
 
 ## Contents
 
-- Python (`python:<version>-slim`), with the time zone set to `Asia/Tokyo`
+- Python (`python:<version>-slim`). The time zone is UTC by default; set the `TZ` environment variable (e.g., `TZ=Asia/Tokyo`) to change it. The base image includes `tzdata`.
 - Libraries from [`requirements.txt`](requirements.txt): `discord-py`, `lxml`, `pillow`
 - The libraries are installed in a virtual environment at `/opt/venv`, which is on `PATH`. Mounting code at `/app` does not hide them.
 - Runs as the non-root user `bot` (UID/GID 1000) in `/app`. The default command is `python`.
@@ -32,6 +32,7 @@ docker pull ghcr.io/urihcim/discord-py:<TAG>
 docker run --rm \
   -v "$(pwd)":/app:ro \
   --env-file .env \
+  -e TZ=Asia/Tokyo \
   ghcr.io/urihcim/discord-py:<TAG> \
   python -m mybot
 ```

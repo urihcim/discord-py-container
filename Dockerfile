@@ -1,15 +1,13 @@
 FROM python:3.15.2-slim
 
-ENV TZ=Asia/Tokyo \
-    VIRTUAL_ENV=/opt/venv \
+ENV VIRTUAL_ENV=/opt/venv \
     PATH=/opt/venv/bin:$PATH \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
 # Libraries go to /opt/venv, outside /app, so that mounting the bot code at
 # /app does not hide them.
-RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    groupadd -g 1000 bot && \
+RUN groupadd -g 1000 bot && \
     useradd -l -u 1000 -g bot -d /app -M bot && \
     python -m venv /opt/venv
 
